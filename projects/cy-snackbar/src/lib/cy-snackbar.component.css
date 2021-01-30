@@ -1,7 +1,7 @@
 .c-wrapper {
   z-index: 100000000;
   display: inline-block;
-  position: fixed;
+  position: absolute;
   max-width: 400px;
   -webkit-box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 0.5);
           box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 0.5);

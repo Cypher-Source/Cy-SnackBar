@@ -22,22 +22,20 @@ export interface SnackBarArgs {
 }
 
 @Component({
-  selector: 'lib-cy-snackbar',
+  selector: 'cy-snackbar',
   template: `
     <div #snackbar class="c-wrapper">
       <p>{{ message }}</p>
     </div>
-
-    <button (click)="show()">Show Snack</button>
   `,
-  styles: ['./cy-snackbar.component.css'],
+  styles: ['cy-snackbar.component.css'],
 })
-export class CySnackbarComponent implements OnInit {
+export class CySnackbar implements OnInit, AfterContentChecked {
   /**
    * To Get the message of the snack-bar
    * @property
    */
-  @Input() message: string = '';
+  @Input() message: string = 'Hello Buddy';
 
   /**
    * To Get the options of snack-bar message
@@ -96,7 +94,7 @@ export class CySnackbarComponent implements OnInit {
     this.className = this.getMessageStatusColor(this.options.status);
 
     // Assign the background color class
-    this.assignBackgroundColor(this.className);
+    this.assignBackgroundColorClass(this.className);
 
     // Assign the position
     this.assignPosition(this.options.position);
@@ -191,9 +189,5 @@ export class CySnackbarComponent implements OnInit {
       this.snackBar.nativeElement.classList.remove('active');
       this.isShowing = false;
     }, duration * 1000);
-  }
-
-  show() {
-    this.isShowing = true;
   }
 }
