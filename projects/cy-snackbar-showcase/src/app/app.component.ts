@@ -23,8 +23,8 @@ export class AppComponent {
 
   // Inputs
   inputs: CySnackBarArgs = {
-    duration: 0,
-    message: '',
+    duration: 4,
+    message: 'Demo Message',
     status: 'success',
   };
 

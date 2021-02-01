@@ -1,3 +1,4 @@
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import {
   AfterContentChecked,
   Component,
@@ -24,7 +25,25 @@ export interface SnackBarArgs {
 @Component({
   selector: 'cy-snackbar',
   template: `
-    <div #snackbar class="c-wrapper">
+    <div #snackbarC class="c-wrapper center">
+      <p>{{ message }}</p>
+    </div>
+    <div #snackbarTR class="c-wrapper top-right">
+      <p>{{ message }}</p>
+    </div>
+    <div #snackbarTL class="c-wrapper top-left">
+      <p>{{ message }}</p>
+    </div>
+    <div #snackbarTC class="c-wrapper top-center">
+      <p>{{ message }}</p>
+    </div>
+    <div #snackbarBR class="c-wrapper bottom-right">
+      <p>{{ message }}</p>
+    </div>
+    <div #snackbarBC class="c-wrapper bottom-center">
+      <p>{{ message }}</p>
+    </div>
+    <div #snackbarBL class="c-wrapper bottom-left">
       <p>{{ message }}</p>
     </div>
   `,
@@ -74,7 +93,20 @@ export class CySnackbar implements OnInit, AfterContentChecked {
   /**
    * @variables
    */
-  @ViewChild('snackbar', { static: true }) snackBar: ElementRef<HTMLElement>;
+  @ViewChild('snackbarC', { static: true })
+  snackBarCenter: ElementRef<HTMLElement>;
+  @ViewChild('snackbarTR', { static: true })
+  snackBarTopRight: ElementRef<HTMLElement>;
+  @ViewChild('snackbarTL', { static: true })
+  snackBarTopLeft: ElementRef<HTMLElement>;
+  @ViewChild('snackbarTC', { static: true })
+  snackBarTopCenter: ElementRef<HTMLElement>;
+  @ViewChild('snackbarBR', { static: true })
+  snackBarBottomRight: ElementRef<HTMLElement>;
+  @ViewChild('snackbarBC', { static: true })
+  snackBarBottomCenter: ElementRef<HTMLElement>;
+  @ViewChild('snackbarBL', { static: true })
+  snackBarBottomLeft: ElementRef<HTMLElement>;
   private className: string;
   private colorClassNames: Array<string> = ['red', 'green', 'grey', 'yellow'];
   private positionClassNames: Array<string> = [
@@ -87,22 +119,27 @@ export class CySnackbar implements OnInit, AfterContentChecked {
     'bottom-center',
   ];
 
+  private activeSnackBar: ElementRef<HTMLElement>;
+
   constructor() {}
 
   ngOnInit() {
-    // Get the message status color class
-    this.className = this.getMessageStatusColor(this.options.status);
+    // // Assign the position
+    // this.assignPosition(this.options.position);
+    // // Get the message status color class
+    // this.className = this.getMessageStatusColor(this.options.status);
+    // // Assign the background color class
+    // this.assignBackgroundColorClass(this.className);
 
-    // Assign the background color class
-    this.assignBackgroundColorClass(this.className);
-
-    // Assign the position
-    this.assignPosition(this.options.position);
+    this.changeDisplayPropertyofSnackBar();
   }
 
   ngAfterContentChecked() {
     console.log('Status Changed as ' + this.isShowing);
     if (this.isShowing) {
+      // Assign the position
+      this.assignPosition(this.options.position);
+
       // Check if custom background color is given
       if (this.options.bgColor) {
         this.assignBackgroundColor(this.options.bgColor);
@@ -114,12 +151,20 @@ export class CySnackbar implements OnInit, AfterContentChecked {
         this.assignBackgroundColorClass(this.className);
       }
 
-      // Assign the position
-      this.assignPosition(this.options.position);
-
       // Display the snackbar
       this.displaySnackBar(this.options.duration);
     }
+  }
+
+  // Change the display property
+  changeDisplayPropertyofSnackBar() {
+    this.snackBarBottomCenter.nativeElement.style.display = 'none';
+    this.snackBarBottomLeft.nativeElement.style.display = 'none';
+    this.snackBarBottomRight.nativeElement.style.display = 'none';
+    this.snackBarCenter.nativeElement.style.display = 'none';
+    this.snackBarTopCenter.nativeElement.style.display = 'none';
+    this.snackBarTopLeft.nativeElement.style.display = 'none';
+    this.snackBarTopRight.nativeElement.style.display = 'none';
   }
 
   // To find the message status color
@@ -149,45 +194,73 @@ export class CySnackbar implements OnInit, AfterContentChecked {
 
   // To assign the background color class to the snackbar
   private assignBackgroundColorClass(className: string) {
-    this.snackBar.nativeElement.classList.forEach((element) => {
+    // Remove the background color property
+    this.activeSnackBar.nativeElement.style.backgroundColor = '';
+
+    this.activeSnackBar.nativeElement.classList.forEach((element) => {
       if (this.colorClassNames.includes(element)) {
-        this.snackBar.nativeElement.classList.remove(element);
+        this.activeSnackBar.nativeElement.classList.remove(element);
       }
     });
 
-    this.snackBar.nativeElement.classList.add(className);
+    this.activeSnackBar.nativeElement.classList.add(className);
   }
 
   // To assign the position of the snack-bar
   private assignPosition(positionClass: string) {
-    this.snackBar.nativeElement.classList.forEach((element) => {
-      if (this.positionClassNames.includes(element)) {
-        this.snackBar.nativeElement.classList.remove(element);
-      }
-    });
-
     if (positionClass.trim() == '') {
       if (window.screen.width <= 670) {
-        this.snackBar.nativeElement.classList.add('bottom-center');
+        this.activeSnackBar = this.snackBarBottomCenter;
       } else {
-        this.snackBar.nativeElement.classList.add('top-right');
+        this.activeSnackBar = this.snackBarTopRight;
       }
     } else {
-      this.snackBar.nativeElement.classList.add(positionClass);
+      switch (positionClass) {
+        case 'top-center':
+          this.activeSnackBar = this.snackBarTopCenter;
+          break;
+        case 'top-left':
+          this.activeSnackBar = this.snackBarTopLeft;
+          break;
+        case 'top-right':
+          this.activeSnackBar = this.snackBarTopRight;
+          break;
+        case 'center':
+          this.activeSnackBar = this.snackBarCenter;
+          break;
+        case 'bottom-right':
+          this.activeSnackBar = this.snackBarBottomRight;
+          break;
+        case 'bottom-left':
+          this.activeSnackBar = this.snackBarBottomLeft;
+          break;
+        case 'bottom-center':
+          this.activeSnackBar = this.snackBarBottomCenter;
+          break;
+        default:
+          this.activeSnackBar = this.snackBarTopRight;
+          break;
+      }
     }
   }
 
   // To assign the background color to the snackbar
   private assignBackgroundColor(color: string) {
-    this.snackBar.nativeElement.style.backgroundColor = color;
+    this.activeSnackBar.nativeElement.style.backgroundColor = color;
   }
 
   // Show the snackbar
   private displaySnackBar(duration: number) {
-    this.snackBar.nativeElement.classList.add('active');
+    this.activeSnackBar.nativeElement.style.display = 'block';
     setTimeout(() => {
-      this.snackBar.nativeElement.classList.remove('active');
-      this.isShowing = false;
-    }, duration * 1000);
+      this.activeSnackBar.nativeElement.classList.add('active');
+      setTimeout(() => {
+        this.activeSnackBar.nativeElement.classList.remove('active');
+        this.isShowing = false;
+        setTimeout(() => {
+          this.activeSnackBar.nativeElement.style.display = 'none';
+        }, 300);
+      }, duration * 1000);
+    }, 100);
   }
 }
