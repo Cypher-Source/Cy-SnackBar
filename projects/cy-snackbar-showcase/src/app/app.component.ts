@@ -17,10 +17,6 @@ interface CySnackBarArgs {
 export class AppComponent {
   title = 'cy-snackbar-showcase';
 
-  // Snackbar Instance
-  @ViewChild('snackbar')
-  snackBar: CySnackbar;
-
   // Inputs
   inputs: CySnackBarArgs = {
     duration: 4,
@@ -35,7 +31,7 @@ export class AppComponent {
     position: 'top-left',
   };
 
-  constructor() {}
+  constructor(private cySnackBar: CySnackbar) {}
 
   ngOnInit(): void {}
 
@@ -45,7 +41,6 @@ export class AppComponent {
     this.options.status = this.inputs.status;
     this.options.position = position;
 
-    // Display the snack bar
-    this.snackBar.isShowing = true;
+    this.cySnackBar.show(this.inputs.message, this.options);
   }
 }

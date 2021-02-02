@@ -1,50 +1,44 @@
 <div>
-    <div class="wrapper">
-      <input
-        type="text"
-        placeholder="Message"
-        id="message"
-        [(ngModel)]="inputs.message"
-      />
-  
-      <input
-        type="number"
-        placeholder="Duration"
-        id="duration"
-        [(ngModel)]="inputs.duration"
-      />
-  
-      <select name="status" id="status" [(ngModel)]="inputs.status">
-        <option value="success">Success</option>
-        <option value="warning">Warning</option>
-        <option value="failed">Failed</option>
-      </select>
-    </div>
-    <div class="wrapper">
-      <button class="c-button" (click)="showSnackBar('center')">Center</button>
-      <button class="c-button" (click)="showSnackBar('top-center')">
-        Top-Center
-      </button>
-      <button class="c-button" (click)="showSnackBar('bottom-center')">
-        Bottom-Center
-      </button>
-      <button class="c-button" (click)="showSnackBar('top-right')">
-        Top-Right
-      </button>
-      <button class="c-button" (click)="showSnackBar('top-left')">
-        Top-Left
-      </button>
-      <button class="c-button" (click)="showSnackBar('bottom-right')">
-        Bottom-Right
-      </button>
-      <button class="c-button" (click)="showSnackBar('bottom-left')">
-        Bottom-Left
-      </button>
-    </div>
+  <div class="wrapper">
+    <input
+      type="text"
+      placeholder="Message"
+      id="message"
+      [(ngModel)]="inputs.message"
+    />
+
+    <input
+      type="number"
+      placeholder="Duration"
+      id="duration"
+      [(ngModel)]="inputs.duration"
+    />
+
+    <select name="status" id="status" [(ngModel)]="inputs.status">
+      <option value="success">Success</option>
+      <option value="warning">Warning</option>
+      <option value="failed">Failed</option>
+    </select>
   </div>
-  
-  <cy-snackbar
-    #snackbar
-    [options]="options"
-    [message]="inputs.message"
-  ></cy-snackbar>
+  <div class="wrapper">
+    <button class="c-button" (click)="showSnackBar('center')">Center</button>
+    <button class="c-button" (click)="showSnackBar('top-center')">
+      Top-Center
+    </button>
+    <button class="c-button" (click)="showSnackBar('bottom-center')">
+      Bottom-Center
+    </button>
+    <button class="c-button" (click)="showSnackBar('top-right')">
+      Top-Right
+    </button>
+    <button class="c-button" (click)="showSnackBar('top-left')">
+      Top-Left
+    </button>
+    <button class="c-button" (click)="showSnackBar('bottom-right')">
+      Bottom-Right
+    </button>
+    <button class="c-button" (click)="showSnackBar('bottom-left')">
+      Bottom-Left
+    </button>
+  </div>
+</div>

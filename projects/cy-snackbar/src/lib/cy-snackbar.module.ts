@@ -1,12 +1,11 @@
 import { NgModule } from '@angular/core';
-import { CySnackbar } from './cy-snackbar.component';
-
-
+import { CySnackbarComponent } from './cy-snackbar.component';
+import { CySnackbar } from './cy-snackbar.service';
 
 @NgModule({
-  declarations: [CySnackbar],
-  imports: [
-  ],
-  exports: [CySnackbar]
+  declarations: [CySnackbarComponent],
+  imports: [],
+  exports: [CySnackbarComponent],
+  providers: [CySnackbar],
 })
-export class CySnackbarModule { }
+export class CySnackbarModule {}
