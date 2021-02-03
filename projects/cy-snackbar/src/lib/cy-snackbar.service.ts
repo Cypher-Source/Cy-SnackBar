@@ -150,23 +150,23 @@ export class CySnackbar {
 
     switch (messageStatus) {
       case 'success':
-        messageColor = '#0ddb0d';
+        messageColor = '#0F9D58';
         this.fontColor = '#fff';
         break;
 
       case 'failed':
-        messageColor = '#eb4034';
+        messageColor = '#DB4437';
         this.fontColor = '#fff';
         break;
 
       case 'warning':
-        messageColor = '#d7de16';
-        this.fontColor = '#000';
+        messageColor = '#F4B400';
+        this.fontColor = '#fff';
         break;
 
       default:
-        messageColor = '#dedede';
-        this.fontColor = '#000';
+        messageColor = '#4285F4';
+        this.fontColor = '#fff';
         break;
     }
 
