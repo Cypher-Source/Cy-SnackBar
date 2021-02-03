@@ -26,7 +26,29 @@ export class CySnackbar {
     },
   });
 
+  /**
+   * Style Variables
+   */
+  // Transitions
   private transitionTime: number = 200;
+
+  // Dimentions
+  private width: number = 250;
+  private minHeight: number = 50;
+
+  // Positions
+  private top: number = 20;
+  private left: number = 20;
+  private right: number = 20;
+  private bottom: number = 20;
+  private topHidden: number = -90;
+  private leftHidden: number = -400;
+  private rightHidden: number = -400;
+  private bottomHidden: number = -90;
+
+  // Font Styles
+  private fontSize: number = 16;
+  private fontColor: string = '#fff';
 
   public readonly snackbar: Observable<SnackBarArgs> = this._snackbar.asObservable();
 
@@ -50,32 +72,25 @@ export class CySnackbar {
     );
 
     const snackbarStyles = snackbarElement.style;
-    snackbarStyles.width = '400px';
-    snackbarStyles.minHeight = '80px';
+    snackbarStyles.width = `${this.width}px`;
+    snackbarStyles.minHeight = `${this.minHeight}px`;
     snackbarStyles.position = 'absolute';
     snackbarStyles.display = 'flex';
     snackbarStyles.alignItems = 'center';
     snackbarStyles.transition = `${this.transitionTime}ms all ease-out`;
-    snackbarStyles.boxShadow = '0px 0px 15px 0px #00000070';
+    snackbarStyles.boxShadow = '0px 0px 15px 0px #00000044';
     snackbarStyles.borderRadius = '5px';
 
     // Message Generation
     const messageElement = document.createElement('p');
     const messageStyles = messageElement.style;
-    messageStyles.fontSize = '24px';
-    messageStyles.color = '#fff';
+    messageStyles.fontSize = `${this.fontSize}px`;
+    messageStyles.color = this.fontColor;
     messageStyles.margin = '0px 15px';
     messageStyles.padding = '0px';
     messageElement.innerHTML = snackbarArgs.message;
 
-    // this.showSnackBarTopLeft(snackbarArgs, snackbarElement, messageElement);
-
-    // this.showSnackBarTopCenter(snackbarArgs, snackbarElement, messageElement);
-    // this.showSnackBarBottomCenter(snackbarArgs, snackbarElement, messageElement);
-    // this.showSnackBarBottomLeft(snackbarArgs, snackbarElement, messageElement);
-    // this.showSnackBarBottomRight(snackbarArgs, snackbarElement, messageElement);
-    // this.showSnackBarCenter(snackbarArgs, snackbarElement, messageElement);
-
+    // Call the display method
     switch (snackbarArgs.options.position) {
       case 'top-right':
         this.showSnackBarTopRight(
@@ -135,19 +150,23 @@ export class CySnackbar {
 
     switch (messageStatus) {
       case 'success':
-        messageColor = '#0f0';
+        messageColor = '#0ddb0d';
+        this.fontColor = '#fff';
         break;
 
       case 'failed':
-        messageColor = '#f00';
+        messageColor = '#eb4034';
+        this.fontColor = '#fff';
         break;
 
       case 'warning':
-        messageColor = '#ff0';
+        messageColor = '#d7de16';
+        this.fontColor = '#000';
         break;
 
       default:
-        messageColor = '#f2f2f2';
+        messageColor = '#dedede';
+        this.fontColor = '#000';
         break;
     }
 
@@ -166,8 +185,8 @@ export class CySnackbar {
     const messageStyles = snackBarMessage.style;
 
     // Set the position
-    snackbarStyles.top = '10px';
-    snackbarStyles.right = '-400px';
+    snackbarStyles.top = `${this.top}px`;
+    snackbarStyles.right = `${this.rightHidden}px`;
 
     // Add the message to the wrapper
     snackbarWrapper.appendChild(snackBarMessage);
@@ -176,10 +195,10 @@ export class CySnackbar {
 
     // Show the snackbar
     setTimeout(() => {
-      snackbarStyles.right = '10px';
+      snackbarStyles.right = `${this.right}px`;
 
       setTimeout(() => {
-        snackbarStyles.right = '-500px';
+        snackbarStyles.right = `${this.rightHidden}px`;
       }, args.options.duration * 1000);
 
       setTimeout(() => {
@@ -199,8 +218,8 @@ export class CySnackbar {
     const messageStyles = snackBarMessage.style;
 
     // Set the position
-    snackbarStyles.top = '10px';
-    snackbarStyles.left = '-400px';
+    snackbarStyles.top = `${this.top}px`;
+    snackbarStyles.left = `${this.leftHidden}px`;
 
     // Add the message to the wrapper
     snackbarWrapper.appendChild(snackBarMessage);
@@ -209,10 +228,10 @@ export class CySnackbar {
 
     // Show the snackbar
     setTimeout(() => {
-      snackbarStyles.left = '10px';
+      snackbarStyles.left = `${this.left}px`;
 
       setTimeout(() => {
-        snackbarStyles.left = '-500px';
+        snackbarStyles.left = `${this.leftHidden}px`;
       }, args.options.duration * 1000);
 
       setTimeout(() => {
@@ -232,7 +251,7 @@ export class CySnackbar {
     const messageStyles = snackBarMessage.style;
 
     // Set the position
-    snackbarStyles.top = '-90px';
+    snackbarStyles.top = `${this.topHidden}px`;
     snackbarStyles.left = '50%';
     snackbarStyles.transform = 'translateX(-50%)';
 
@@ -243,10 +262,10 @@ export class CySnackbar {
 
     // Show the snackbar
     setTimeout(() => {
-      snackbarStyles.top = '15px';
+      snackbarStyles.top = `${this.top}px`;
 
       setTimeout(() => {
-        snackbarStyles.top = '-90px';
+        snackbarStyles.top = `${this.topHidden}px`;
       }, args.options.duration * 1000);
 
       setTimeout(() => {
@@ -266,7 +285,7 @@ export class CySnackbar {
     const messageStyles = snackBarMessage.style;
 
     // Set the position
-    snackbarStyles.bottom = '-90px';
+    snackbarStyles.bottom = `${this.bottomHidden}px`;
     snackbarStyles.left = '50%';
     snackbarStyles.transform = 'translateX(-50%)';
 
@@ -277,10 +296,10 @@ export class CySnackbar {
 
     // Show the snackbar
     setTimeout(() => {
-      snackbarStyles.bottom = '15px';
+      snackbarStyles.bottom = `${this.bottom}px`;
 
       setTimeout(() => {
-        snackbarStyles.bottom = '-90px';
+        snackbarStyles.bottom = `${this.bottomHidden}px`;
       }, args.options.duration * 1000);
 
       setTimeout(() => {
@@ -300,8 +319,8 @@ export class CySnackbar {
     const messageStyles = snackBarMessage.style;
 
     // Set the position
-    snackbarStyles.bottom = '10px';
-    snackbarStyles.right = '-400px';
+    snackbarStyles.bottom = `${this.bottom}px`;
+    snackbarStyles.right = `${this.rightHidden}px`;
 
     // Add the message to the wrapper
     snackbarWrapper.appendChild(snackBarMessage);
@@ -310,10 +329,10 @@ export class CySnackbar {
 
     // Show the snackbar
     setTimeout(() => {
-      snackbarStyles.right = '10px';
+      snackbarStyles.right = `${this.right}px`;
 
       setTimeout(() => {
-        snackbarStyles.right = '-500px';
+        snackbarStyles.right = `${this.rightHidden}px`;
       }, args.options.duration * 1000);
 
       setTimeout(() => {
@@ -333,8 +352,8 @@ export class CySnackbar {
     const messageStyles = snackBarMessage.style;
 
     // Set the position
-    snackbarStyles.bottom = '10px';
-    snackbarStyles.left = '-400px';
+    snackbarStyles.bottom = `${this.bottom}px`;
+    snackbarStyles.left = `${this.leftHidden}px`;
 
     // Add the message to the wrapper
     snackbarWrapper.appendChild(snackBarMessage);
@@ -343,10 +362,10 @@ export class CySnackbar {
 
     // Show the snackbar
     setTimeout(() => {
-      snackbarStyles.left = '10px';
+      snackbarStyles.left = `${this.left}px`;
 
       setTimeout(() => {
-        snackbarStyles.left = '-500px';
+        snackbarStyles.left = `${this.leftHidden}px`;
       }, args.options.duration * 1000);
 
       setTimeout(() => {
